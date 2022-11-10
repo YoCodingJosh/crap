@@ -9,6 +9,7 @@ playing around with:
 * react-bootstrap
 * react-router
 * CSS modules
+* Redux
 * really whatever tickles me fancy
 
 # Getting Started with Create React App
