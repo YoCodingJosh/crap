@@ -1,3 +1,16 @@
+# Josh's Cool App
+
+the world's best application as decided by me
+
+playing around with:
+
+* React
+* Create React App
+* react-bootstrap
+* react-router
+* CSS modules
+* really whatever tickles me fancy
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
