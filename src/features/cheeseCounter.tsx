@@ -57,7 +57,7 @@ export const CheeseCounter = () => {
       if (getVideoUrl() === cheeseUrl) {
         let videoList = [];
         for (let i = 0; i < count; i++) {
-          videoList.push(component);
+          videoList.push(React.cloneElement(component, { key: i }));
         } 
         return (
           <>
@@ -66,7 +66,9 @@ export const CheeseCounter = () => {
         )
       } else {
         return (
-          <ReactPlayer url={getVideoUrl()!} playing={true} onEnded={onVideoEnd} />
+          <>
+            {component}
+          </>
         );
       }
     } else {
