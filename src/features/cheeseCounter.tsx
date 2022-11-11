@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { increment } from './cheeseCounterSlice';
+import { increment, enableTurbo, disableTurbo } from './cheeseCounterSlice';
 
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 
 import prizeImage from '../grand_prize.png';
 
 export const CheeseCounter = () => {
   const count = useSelector((state: any) => state.cheeseCounter.value);
+  const turbo = useSelector((state: any) => state.cheeseCounter.turbo);
+
   const dispatch = useDispatch();
 
   const rickRollUrl = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
   const nyanCatUrl = 'https://www.youtube.com/watch?v=QH2-TGUlwu4';
-  const cheeseUrl = '/cheese.mp4';
+  const cheeseUrl = 'https://www.youtube.com/watch?v=SyimUCBIo6c';
 
-  const winningScore = 420;
+  const winningScore = 69;
 
-  let [incrementDisabled, setIncrementDisabled] = useState(false);
-  let [playingVideo, setPlayingVideo] = useState(false);
+  const [incrementDisabled, setIncrementDisabled] = useState(false);
+  const [playingVideo, setPlayingVideo] = useState(false);
 
   const getVideoUrl = (): string | null => {
-    if (count > 2 && count % 8 === 0) {
-      return nyanCatUrl;
-    } else if (count > 2 && count % 69 === 0) {
+    if (count > 0 && count % 68 === 0) {
       return rickRollUrl;
     } else if (count === winningScore) {
       return null;
@@ -49,10 +49,26 @@ export const CheeseCounter = () => {
   };
 
   const videoPlayer = () => {
+    let component = (
+      <ReactPlayer url={getVideoUrl()!} playing={true} onEnded={onVideoEnd} />
+    );
+
     if (playingVideo) {
-      return (
-        <ReactPlayer url={getVideoUrl()!} playing={true} onEnded={onVideoEnd} />
-      );
+      if (getVideoUrl() === cheeseUrl) {
+        let videoList = [];
+        for (let i = 0; i < count; i++) {
+          videoList.push(component);
+        } 
+        return (
+          <>
+            {videoList}
+          </>
+        )
+      } else {
+        return (
+          <ReactPlayer url={getVideoUrl()!} playing={true} onEnded={onVideoEnd} />
+        );
+      }
     } else {
       if (count === winningScore) {
         return (
@@ -75,11 +91,14 @@ export const CheeseCounter = () => {
 
   return (
     <div>
+      <Form.Switch 
+        label="Turbo?"
+        id="turbo-switch"
+        onChange={() => { turbo ? dispatch(disableTurbo()) : dispatch(enableTurbo()); }}
+      />
       <Button variant='warning' onClick={ () => { handleIncrement(); } } disabled={incrementDisabled}>Get Cheese</Button>
       <span>Your score: { count }</span>
-      <div className='video-container'>
-        { videoPlayer() }
-      </div>
+      { videoPlayer() }
     </div>
   );
 };
