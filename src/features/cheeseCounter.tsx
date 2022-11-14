@@ -6,7 +6,7 @@ import { increment, enableTurbo, disableTurbo } from './cheeseCounterSlice';
 
 import { Button, Form } from 'react-bootstrap';
 
-import ReactPlayer from 'react-player/lazy';
+import ReactPlayer from 'react-player/youtube';
 
 import prizeImage from '../grand_prize.png';
 
