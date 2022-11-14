@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import { RouterProvider, Navigate, createHashRouter } from 'react-router-dom';
 
 import About from './routes/About';
 import Home from './routes/Home';
@@ -15,7 +15,7 @@ import Main from './routes/Main';
 import store from './store';
 import { Provider } from 'react-redux';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <App />,
