@@ -17,11 +17,11 @@ export const CheeseCounter = () => {
   const dispatch = useDispatch();
 
   const rickRollUrl = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-  const nyanCatUrl = 'https://www.youtube.com/watch?v=QH2-TGUlwu4';
   const cheeseUrl = 'https://www.youtube.com/watch?v=SyimUCBIo6c';
 
   const winningScore = 69;
 
+  const [playingVideosCount, setPlayingVideosCount] = useState(0);
   const [incrementDisabled, setIncrementDisabled] = useState(false);
   const [playingVideo, setPlayingVideo] = useState(false);
 
@@ -40,12 +40,15 @@ export const CheeseCounter = () => {
 
     setIncrementDisabled(true);
     setPlayingVideo(getVideoUrl() !== null);
+    setPlayingVideosCount(count);
   };
 
   const onVideoEnd = () => {
-    setIncrementDisabled(false);
-    setPlayingVideo(false);
-    console.log("finished video!");
+    setPlayingVideosCount(playingVideosCount - 1);
+    if (playingVideosCount === 0) {
+      setIncrementDisabled(false);
+      setPlayingVideo(false);
+    }
   };
 
   const videoPlayer = () => {
@@ -58,7 +61,7 @@ export const CheeseCounter = () => {
         let videoList = [];
         for (let i = 0; i < count; i++) {
           videoList.push(React.cloneElement(component, { key: i }));
-        } 
+        }
         return (
           <>
             {videoList}
