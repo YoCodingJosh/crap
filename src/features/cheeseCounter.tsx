@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -13,8 +13,10 @@ import { isIOS } from 'react-device-detect';
 
 import prizeImage from '../grand_prize.png';
 
+import styles from './cheeseCounter.module.css';
+
 export const CheeseCounter = () => {
-  const count = useSelector((state: any) => state.cheeseCounter.value);
+  const countState = useSelector((state: any) => state.cheeseCounter.value);
   const turbo = useSelector((state: any) => state.cheeseCounter.turbo);
 
   const dispatch = useDispatch();
@@ -26,31 +28,36 @@ export const CheeseCounter = () => {
 
   const winningScore = 69;
 
-  const [playingVideosCount, setPlayingVideosCount] = useState(0);
+  const count = useRef(countState);
+  const playingVideoCount = useRef(0);
   const [incrementDisabled, setIncrementDisabled] = useState(false);
   const [playingVideo, setPlayingVideo] = useState(false);
 
   const getVideoUrl = (): string | null => {
-    if (count > 0 && count % 68 === 0) {
+    if (count.current > 0 && count.current % 68 === 0) {
       return rickRollUrl;
-    } else if (count === winningScore) {
+    } else if (count.current === winningScore) {
       return null;
     } else {
       return cheeseUrl;
     }
   };
 
-  const handleIncrement = () => {
+  const handleIncrement = async () => {
     dispatch(increment());
+    
+    count.current += 1;
 
     setIncrementDisabled(true);
     setPlayingVideo(getVideoUrl() !== null);
-    setPlayingVideosCount(count);
+
+    playingVideoCount.current = count.current;
   };
 
   const onVideoEnd = () => {
-    setPlayingVideosCount(playingVideosCount - 1);
-    if (playingVideosCount === 0) {
+    playingVideoCount.current -= 1;
+
+    if (playingVideoCount.current === 0) {
       setIncrementDisabled(false);
       setPlayingVideo(false);
     }
@@ -88,13 +95,13 @@ export const CheeseCounter = () => {
     if (playingVideo) {
       if (getVideoUrl() === cheeseUrl) {
         let videoList = [];
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < count.current; i++) {
           videoList.push(React.cloneElement(component, { key: i }));
         }
         return (
-          <>
+          <div className={styles.cheeseContainer}>
             {videoList}
-          </>
+          </div>
         )
       } else {
         return (
@@ -104,7 +111,7 @@ export const CheeseCounter = () => {
         );
       }
     } else {
-      if (count === winningScore) {
+      if (count.current === winningScore) {
         return (
           <>
             <h1>You win!</h1>
@@ -135,7 +142,7 @@ export const CheeseCounter = () => {
         onChange={() => { turbo ? dispatch(disableTurbo()) : dispatch(enableTurbo()); }}
       />
       <Button variant='warning' onClick={ () => { handleIncrement(); } } disabled={incrementDisabled}>Get Cheese</Button>
-      <span>Your score: { count }</span>
+      <span>Your score: { count.current }</span>
       { videoPlayer() }
     </div>
   );

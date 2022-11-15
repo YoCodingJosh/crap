@@ -1,0 +1,9 @@
+.cheeseContainer {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 75vw;
+  left: calc(-1 * (75vw - 100%) / 2);
+}
