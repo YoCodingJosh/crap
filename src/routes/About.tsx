@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export default function About() {
   const count = useSelector((state: any) => state.cheeseCounter.value);
@@ -7,7 +7,7 @@ export default function About() {
     count > 0 ?
       <p>You have cheesed {count} time{count > 1 ? 's' : ''}.</p>
       :
-      <p>You have not cheesed yet. Sadge</p>
+      <p>You have not cheesed yet. <img src="https://cdn.frankerfacez.com/emoticon/243789/2" alt="Pepega"></img></p>
   );
 
   return (

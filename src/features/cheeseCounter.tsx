@@ -6,7 +6,10 @@ import { increment, enableTurbo, disableTurbo } from './cheeseCounterSlice';
 
 import { Button, Form } from 'react-bootstrap';
 
-import ReactPlayer from 'react-player/youtube';
+import YouTubePlayer from 'react-player/youtube';
+import FilePlayer from 'react-player/file';
+
+import { isIOS } from 'react-device-detect';
 
 import prizeImage from '../grand_prize.png';
 
@@ -18,6 +21,8 @@ export const CheeseCounter = () => {
 
   const rickRollUrl = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
   const cheeseUrl = 'https://www.youtube.com/watch?v=SyimUCBIo6c';
+  const cheeseUrlCdn = '//grabbag.public-cdn-1.hypeworks.net/cheese.mp4';
+  const rickRollCdn = '//grabbag.public-cdn-1.hypeworks.net/dQw4w9WgXcQ.mp4';
 
   const winningScore = 69;
 
@@ -51,9 +56,33 @@ export const CheeseCounter = () => {
     }
   };
 
+  const ReactPlayer = () => {
+    let videoUrl = getVideoUrl()!;
+
+    if (false) {
+      if (videoUrl === cheeseUrl) {
+        videoUrl = cheeseUrlCdn;
+      } else if (videoUrl === rickRollUrl) {
+        videoUrl = rickRollCdn;
+      }
+    }
+
+    if (false) {
+      return (
+        <FilePlayer url={videoUrl} playing={true} onEnded={onVideoEnd} />
+      );
+    } else {
+      return (
+        <YouTubePlayer url={videoUrl} playing={true} onEnded={onVideoEnd} />
+      );
+    }
+  }
+
   const videoPlayer = () => {
     let component = (
-      <ReactPlayer url={getVideoUrl()!} playing={true} onEnded={onVideoEnd} />
+      <>
+        {ReactPlayer()}
+      </>
     );
 
     if (playingVideo) {
@@ -80,6 +109,7 @@ export const CheeseCounter = () => {
           <>
             <h1>You win!</h1>
             <img src={prizeImage} alt="Grand prize" />
+            <img src="https://cdn.frankerfacez.com/emoticon/418189/4" alt="YEP" />
           </>
         );
       } else {
@@ -88,14 +118,17 @@ export const CheeseCounter = () => {
     }
   };
 
-  console.log("playingVideo: " + playingVideo);
-  console.log("incrementDisabled: " + incrementDisabled);
-  console.log("count: " + count);
-  console.log("getVideoUrl(): " + getVideoUrl());
-  console.log(videoPlayer());
+  const iOSWarning = () => {
+    if (isIOS) {
+      return (
+        <p>Does not work properly on iOS. <img src="https://cdn.frankerfacez.com/emoticon/425196/1" alt="Sadge"></img></p>
+      );
+    }
+  };
 
   return (
     <div>
+      {iOSWarning()}
       <Form.Switch 
         label="Turbo?"
         id="turbo-switch"
