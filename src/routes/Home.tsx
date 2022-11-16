@@ -23,7 +23,7 @@ export default function Home() {
           href="https://create-react-app.dev/"
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => { window.location.replace('https://www.youtube.com/watch?v=dQw4w9WgXcQ'); }}
+          onClick={() => { window.location.assign('https://www.youtube.com/watch?v=dQw4w9WgXcQ'); }}
         >
           Made with Create React App
         </a>
