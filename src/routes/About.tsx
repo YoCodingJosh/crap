@@ -5,9 +5,9 @@ export default function About() {
 
   let cheeseCountMessageElement = (
     count > 0 ?
-      <p>You have cheesed {count} time{count > 1 ? 's' : ''}.</p>
+      <p>You have cheesed {count} time{count > 1 ? 's' : ''}. <img src="https://cdn.frankerfacez.com/emoticon/243789/2" alt="Pepega"></img></p>
       :
-      <p>You have not cheesed yet. <img src="https://cdn.frankerfacez.com/emoticon/243789/2" alt="Pepega"></img></p>
+      <p>You have not cheesed yet. <img src="https://cdn.frankerfacez.com/emoticon/425196/2" alt="Sadge"></img></p>
   );
 
   return (
