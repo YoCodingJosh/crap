@@ -18,6 +18,9 @@ export default function MyNav() {
           <LinkContainer to="/main">
             <Nav.Link>Cheese</Nav.Link>
           </LinkContainer>
+          <LinkContainer to="/tabulate">
+            <Nav.Link>Tabulate</Nav.Link>
+          </LinkContainer>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

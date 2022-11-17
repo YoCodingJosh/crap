@@ -11,6 +11,7 @@ import { RouterProvider, Navigate, createHashRouter } from 'react-router-dom';
 import About from './routes/About';
 import Home from './routes/Home';
 import Main from './routes/Main';
+import Tabulate from './routes/Tabulate';
 
 import store from './store';
 import { Provider } from 'react-redux';
@@ -35,7 +36,11 @@ const router = createHashRouter([
       {
         path: '/main',
         element: <Main />
-      }
+      },
+      {
+        path: '/tabulate',
+        element: <Tabulate />
+      },
     ]
   },
 ]);

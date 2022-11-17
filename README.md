@@ -10,6 +10,7 @@ playing around with:
 * react-router
 * CSS modules
 * Redux
+* MUI X DataGrid
 * really whatever tickles me fancy
 
 # Getting Started with Create React App
