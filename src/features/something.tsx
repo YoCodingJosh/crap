@@ -44,7 +44,6 @@ export default function Something() {
   const [rows, setRows] = useState<SomethingPersonModel[]>(people);
 
   useEffect(() => {
-    console.log(people);
     setRows(people);
   }, []);
 
