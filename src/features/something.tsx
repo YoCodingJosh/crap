@@ -1,6 +1,6 @@
 import { DataGrid, GridValueGetterParams } from "@mui/x-data-grid";
 import { Button } from 'react-bootstrap';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SomethingPersonModel from "./somethingPersonModel";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { addPerson, removePerson } from "./somethingSlice";
@@ -42,10 +42,6 @@ export default function Something() {
   const dispatch = useAppDispatch();
 
   const [rows, setRows] = useState<SomethingPersonModel[]>(people);
-
-  useEffect(() => {
-    setRows(people);
-  }, []);
 
   const addRow = () => {
     const person = new SomethingPersonModel(rows.length + 1,
