@@ -1,4 +1,4 @@
-import { DataGrid, GridValueGetterParams } from "@mui/x-data-grid";
+import { DataGrid, GridCellEditCommitParams, GridValueGetterParams } from "@mui/x-data-grid";
 import { Button } from 'react-bootstrap';
 import { useState } from "react";
 import SomethingPersonModel from "./somethingPersonModel";
@@ -6,7 +6,7 @@ import { useAppSelector, useAppDispatch } from "../hooks";
 import { addPerson, removePerson } from "./somethingSlice";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 70, hide: true },
+  { field: "id", headerName: "ID", width: 70, },
   {
     field: "firstName",
     headerName: "First name",
@@ -57,10 +57,40 @@ export default function Something() {
     dispatch(addPerson(person));
   };
 
+  const updateRow = (params: GridCellEditCommitParams) => {
+    console.log("updateRow", params);
+    const person = rows.find((row) => row.id === params.id)!;
+
+    if (person) {
+      switch (params.field) {
+        case "firstName":
+          person.firstName = params.value as string;
+          break;
+        case "lastName":
+          person.lastName = params.value as string;
+          break;
+        case "age":
+          person.age = params.value as number;
+          break;
+      }
+
+      setRows([
+        ...rows,
+      ]);
+
+      dispatch(removePerson(person));
+      dispatch(addPerson(person));
+    }
+  };
+
   return (
     <div>
       <Button variant="primary" onClick={addRow}>Add Row</Button>
-      <DataGrid rows={rows} columns={columns} experimentalFeatures={{ newEditingApi: true }} autoHeight />
+      <DataGrid rows={rows} columns={columns}
+      autoHeight
+      onCellEditCommit={(params: GridCellEditCommitParams) => {
+        updateRow(params);
+      }} />
       <p>There are {rows.length} {rows.length === 1 ? "person" : "people"} in the table.</p>
     </div >
   );

@@ -8,6 +8,9 @@ export const store = configureStore({
     cheeseCounter: cheeseCounterReducer,
     something: somethingReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });
 
 export default store;
